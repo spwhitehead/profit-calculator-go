@@ -11,18 +11,18 @@ func main(){
 	var taxRate float64
 
 	fmt.Print("What is your annual revenue? ")
-	fmt.Scan(annualRevenue)
+	fmt.Scan(&annualRevenue)
 
 	fmt.Print("What are your annual expenses (in $)? ")
-	fmt.Scan(annualExpenses)
+	fmt.Scan(&annualExpenses)
 
 	fmt.Print("What is your tax rate? ")
-	fmt.Scan(taxRate)
+	fmt.Scan(&taxRate)
 
 	// Calculations
 
 	earningsBeforeTax := annualRevenue - annualExpenses
-	profit := earningsBeforeTax * (1+taxRate/100)
+	profit := earningsBeforeTax * (1-taxRate/100)
 	ratio := earningsBeforeTax / profit
 
 	fmt.Print("Earnings Before Tax: ")

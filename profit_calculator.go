@@ -6,25 +6,16 @@ import (
 
 func main(){
 
-	var annualRevenue float64
-	var annualExpenses float64
-	var taxRate float64
 
-	getValue("Annual Revenue: ")
-	fmt.Scan(&annualRevenue)
-
-	getValue("Annual Expenses: ")
-	fmt.Scan(&annualExpenses)
-
-	getValue("Tax Rate: ")
-	fmt.Scan(&taxRate)
+	annualRevenue := getValue("Annual Revenue: ")
+	annualExpenses := getValue("Annual Expenses: ")
+	taxRate := getValue("Tax Rate: ")
 
 	ebt, profit, ratio := calculations(annualRevenue, annualExpenses, taxRate)
 
-	fmt.Printf(`
-	Earnings Before Tax:	 %.2f
-	Profit: 		 %.2f
-	Ratio (ebt/profit): 	 %.2f`, ebt, profit, ratio)
+	fmt.Printf("%.2f\n", ebt)
+	fmt.Printf("%.2f\n", profit)
+	fmt.Printf("%.4f\n", ratio)
 	// fmt.Print("What is your annual revenue? ")
 	// fmt.Scan(&annualRevenue)
 
@@ -51,8 +42,11 @@ func main(){
 
 }
 
-func getValue(value string){
-	fmt.Print(value)
+func getValue(infoText string) float64 {
+	var userInput float64
+	fmt.Print(infoText)
+	fmt.Scan(&userInput)
+	return userInput
 }
 
 func calculations(annualRevenue, annualExpenses, taxRate float64) (ebt float64, profit float64, ratio float64){

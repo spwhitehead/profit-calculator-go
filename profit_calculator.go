@@ -2,7 +2,37 @@ package main
 
 import (
 	"fmt"
+	"os"
 )
+
+func writeCalcuationsToFile(ebt float64, profit float64, ratio float64){
+	calculationText := fmt.Sprint(ebt, profit, ratio)
+	os.WriteFile("calculationsFile.txt", []byte(calculationText), 0644)
+}
+
+func getValue(infoText string) float64 {
+	for {
+		var userInput float64
+		fmt.Print(infoText)
+		_ , err := fmt.Scan(&userInput)
+		if err != nil || userInput <= 0{
+			fmt.Println()
+			fmt.Println("Invalid input. Enter a number greater than zero.")
+		} else {
+			return userInput
+		}
+	}
+}
+
+func calculations(annualRevenue, annualExpenses, taxRate float64) (ebt float64, profit float64, ratio float64){
+	ebt = annualRevenue - annualExpenses
+	profit = ebt * (1-taxRate/100)
+	ratio = ebt / profit
+	writeCalcuationsToFile(ebt, profit, ratio)
+	return ebt, profit, ratio
+
+}
+
 
 func main(){
 
@@ -13,46 +43,8 @@ func main(){
 
 	ebt, profit, ratio := calculations(annualRevenue, annualExpenses, taxRate)
 
-	fmt.Printf("%.2f\n", ebt)
-	fmt.Printf("%.2f\n", profit)
-	fmt.Printf("%.4f\n", ratio)
-	// fmt.Print("What is your annual revenue? ")
-	// fmt.Scan(&annualRevenue)
-
-	// fmt.Print("What are your annual expenses (in $)? ")
-	// fmt.Scan(&annualExpenses)
-
-	// fmt.Print("What is your tax rate? ")
-	// fmt.Scan(&taxRate)
-
-	// Calculations
-
-	// earningsBeforeTax := annualRevenue - annualExpenses
-	// profit := earningsBeforeTax * (1-taxRate/100)
-	// ratio := earningsBeforeTax / profit
-
-	// fmt.Print("Earnings Before Tax: ")
-	// fmt.Println(earningsBeforeTax)
-
-	// fmt.Print("Profit: ")
-	// fmt.Println(profit)
-
-	// fmt.Print("Ratio (EBT/Profit): ")
-	// fmt.Println(ratio)
-
-}
-
-func getValue(infoText string) float64 {
-	var userInput float64
-	fmt.Print(infoText)
-	fmt.Scan(&userInput)
-	return userInput
-}
-
-func calculations(annualRevenue, annualExpenses, taxRate float64) (ebt float64, profit float64, ratio float64){
-	ebt = annualRevenue - annualExpenses
-	profit = ebt * (1-taxRate/100)
-	ratio = ebt / profit
-	return ebt, profit, ratio
+	fmt.Printf("Expenses before tax: $%.2f\n", ebt)
+	fmt.Printf("Profit after tax: $%.2f\n", profit)
+	fmt.Printf("Ratio: $%.4f\n", ratio)
 
 }

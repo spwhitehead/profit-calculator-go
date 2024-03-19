@@ -5,8 +5,8 @@ import (
 	"os"
 )
 
-func writeCalcuationsToFile(ebt float64, profit float64, ratio float64){
-	calculationText := fmt.Sprint(ebt, profit, ratio)
+func writeCalcuationsToFile(ebt, profit, ratio float64){
+	calculationText := fmt.Sprintf("EBT: $%.2f\nProfit: $%.2f\nRatio: %.4f", ebt, profit, ratio)
 	os.WriteFile("calculationsFile.txt", []byte(calculationText), 0644)
 }
 
@@ -30,9 +30,7 @@ func calculations(annualRevenue, annualExpenses, taxRate float64) (ebt float64, 
 	ratio = ebt / profit
 	writeCalcuationsToFile(ebt, profit, ratio)
 	return ebt, profit, ratio
-
 }
-
 
 func main(){
 
@@ -45,6 +43,6 @@ func main(){
 
 	fmt.Printf("Expenses before tax: $%.2f\n", ebt)
 	fmt.Printf("Profit after tax: $%.2f\n", profit)
-	fmt.Printf("Ratio: $%.4f\n", ratio)
+	fmt.Printf("Ratio: %.4f\n", ratio)
 
 }
